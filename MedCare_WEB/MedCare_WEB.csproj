@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,7 +44,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -53,6 +60,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -60,6 +70,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -88,81 +101,69 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\css\animate.min.css" />
-    <Content Include="assets\css\bootstrap.min.css" />
-    <Content Include="assets\css\datepicker.css" />
-    <Content Include="assets\css\font-awesome.min.css" />
-    <Content Include="assets\css\icofont.css" />
-    <Content Include="assets\css\magnific-popup.css" />
-    <Content Include="assets\css\nice-select.css" />
-    <Content Include="assets\css\normalize.css" />
-    <Content Include="assets\css\owl-carousel.css" />
-    <Content Include="assets\css\responsive.css" />
-    <Content Include="assets\css\slicknav.min.css" />
-    <Content Include="assets\fonts\fontawesome-webfont.svg" />
-    <Content Include="assets\fonts\icofont.svg" />
-    <Content Include="assets\img\about-img.jpg" />
-    <Content Include="assets\img\author1.jpg" />
-    <Content Include="assets\img\author2.jpg" />
-    <Content Include="assets\img\author3.jpg" />
-    <Content Include="assets\img\blockqoute-bg.jpg" />
-    <Content Include="assets\img\blog-sidebar1.jpg" />
-    <Content Include="assets\img\blog-sidebar2.jpg" />
-    <Content Include="assets\img\blog-sidebar3.jpg" />
-    <Content Include="assets\img\blog1.jpg" />
-    <Content Include="assets\img\blog2.jpg" />
-    <Content Include="assets\img\blog3.jpg" />
-    <Content Include="assets\img\bread-bg.jpg" />
-    <Content Include="assets\img\call-bg.jpg" />
-    <Content Include="assets\img\client-bg.jpg" />
-    <Content Include="assets\img\client1.png" />
-    <Content Include="assets\img\client2.png" />
-    <Content Include="assets\img\client3.png" />
-    <Content Include="assets\img\client4.png" />
-    <Content Include="assets\img\client5.png" />
-    <Content Include="assets\img\contact-img.png" />
-    <Content Include="assets\img\favicon.png" />
-    <Content Include="assets\img\fun-bg.jpg" />
-    <Content Include="assets\img\logo.png" />
-    <Content Include="assets\img\map-marker.png" />
-    <Content Include="assets\img\mission-img.jpg" />
-    <Content Include="assets\img\pf1.jpg" />
-    <Content Include="assets\img\pf2.jpg" />
-    <Content Include="assets\img\pf3.jpg" />
-    <Content Include="assets\img\pf4.jpg" />
-    <Content Include="assets\img\section-img.png" />
-    <Content Include="assets\img\signup-bg.jpg" />
-    <Content Include="assets\img\slider.jpg" />
-    <Content Include="assets\img\slider2.jpg" />
-    <Content Include="assets\img\slider3.jpg" />
-    <Content Include="assets\img\testi-bg.jpg" />
-    <Content Include="assets\img\video-bg.jpg" />
-    <Content Include="assets\js\bootstrap-datepicker.js" />
-    <Content Include="assets\js\bootstrap.min.js" />
-    <Content Include="assets\js\colors.js" />
-    <Content Include="assets\js\easing.js" />
-    <Content Include="assets\js\gmaps.min.js" />
-    <Content Include="assets\js\jquery-migrate-3.0.0.js" />
-    <Content Include="assets\js\jquery-ui.min.js" />
-    <Content Include="assets\js\jquery.counterup.min.js" />
-    <Content Include="assets\js\jquery.magnific-popup.min.js" />
-    <Content Include="assets\js\jquery.min.js" />
-    <Content Include="assets\js\jquery.nav.js" />
-    <Content Include="assets\js\jquery.scrollUp.min.js" />
-    <Content Include="assets\js\main.js" />
-    <Content Include="assets\js\map-active.js" />
-    <Content Include="assets\js\niceselect.js" />
-    <Content Include="assets\js\owl-carousel.js" />
-    <Content Include="assets\js\popper.min.js" />
-    <Content Include="assets\js\slicknav.min.js" />
-    <Content Include="assets\js\steller.js" />
-    <Content Include="assets\js\tilt.jquery.min.js" />
-    <Content Include="assets\js\wow.min.js" />
-    <Content Include="assets\style.css" />
+    <Content Include="Contents\css\ajax-loader.gif" />
+    <Content Include="Contents\css\animate.css" />
+    <Content Include="Contents\css\aos.css" />
+    <Content Include="Contents\css\bootstrap.min.css" />
+    <Content Include="Contents\css\bootstrap\bootstrap-grid.css" />
+    <Content Include="Contents\css\bootstrap\bootstrap-reboot.css" />
+    <Content Include="Contents\css\css\bootstrap-reboot.css" />
+    <Content Include="Contents\css\css\mixins\_text-hide.css" />
+    <Content Include="Contents\css\flaticon.css" />
+    <Content Include="Contents\css\icomoon.css" />
+    <Content Include="Contents\css\ionicons.min.css" />
+    <Content Include="Contents\css\magnific-popup.css" />
+    <Content Include="Contents\css\open-iconic-bootstrap.min.css" />
+    <Content Include="Contents\css\owl.carousel.min.css" />
+    <Content Include="Contents\css\owl.theme.default.min.css" />
+    <Content Include="Contents\css\style.css" />
+    <Content Include="Contents\images\about.jpg" />
+    <Content Include="Contents\images\bg_1.jpg" />
+    <Content Include="Contents\images\bg_2.jpg" />
+    <Content Include="Contents\images\bg_3.jpg" />
+    <Content Include="Contents\images\dept-1.jpg" />
+    <Content Include="Contents\images\doc-1.jpg" />
+    <Content Include="Contents\images\doc-2.jpg" />
+    <Content Include="Contents\images\doc-3.jpg" />
+    <Content Include="Contents\images\doc-4.jpg" />
+    <Content Include="Contents\images\doc-5.jpg" />
+    <Content Include="Contents\images\doc-6.jpg" />
+    <Content Include="Contents\images\doc-7.jpg" />
+    <Content Include="Contents\images\doc-8.jpg" />
+    <Content Include="Contents\images\footer-bg.jpg" />
+    <Content Include="Contents\images\image_1.jpg" />
+    <Content Include="Contents\images\image_2.jpg" />
+    <Content Include="Contents\images\image_3.jpg" />
+    <Content Include="Contents\images\image_4.jpg" />
+    <Content Include="Contents\images\image_5.jpg" />
+    <Content Include="Contents\images\image_6.jpg" />
+    <Content Include="Contents\images\image_7.jpg" />
+    <Content Include="Contents\images\image_8.jpg" />
+    <Content Include="Contents\images\loc.png" />
+    <Content Include="Contents\images\person_1.jpg" />
+    <Content Include="Contents\images\person_2.jpg" />
+    <Content Include="Contents\images\person_3.jpg" />
+    <Content Include="Contents\images\person_4.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\js\aos.js" />
+    <Content Include="Scripts\js\bootstrap.min.js" />
+    <Content Include="Scripts\js\google-map.js" />
+    <Content Include="Scripts\js\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\js\jquery-migrate-3.0.1.min.js" />
+    <Content Include="Scripts\js\jquery.animateNumber.min.js" />
+    <Content Include="Scripts\js\jquery.easing.1.3.js" />
+    <Content Include="Scripts\js\jquery.magnific-popup.min.js" />
+    <Content Include="Scripts\js\jquery.min.js" />
+    <Content Include="Scripts\js\jquery.stellar.min.js" />
+    <Content Include="Scripts\js\jquery.waypoints.min.js" />
+    <Content Include="Scripts\js\main.js" />
+    <Content Include="Scripts\js\owl.carousel.min.js" />
+    <Content Include="Scripts\js\popper.min.js" />
+    <Content Include="Scripts\js\scrollax.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -172,21 +173,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="assets\fonts\icofont.eot" />
-    <Content Include="assets\fonts\icofont.ttf" />
-    <Content Include="assets\fonts\icofont.woff" />
-    <Content Include="assets\fonts\icofont.woff2" />
-    <Content Include="assets\mail\mail.php" />
+    <Content Include="Contents\css\.DS_Store" />
+    <Content Include="Contents\css\bootstrap\.DS_Store" />
+    <Content Include="Contents\css\css\.DS_Store" />
+    <Content Include="Contents\images\.DS_Store" />
     <None Include="packages.config" />
-    <Content Include="Views\_LayoutPage1.cshtml" />
+    <Content Include="Views\Shared\_LayoutPage.cshtml" />
+    <Content Include="Views\Shared\_NavigationBar.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Share\_Footer.cshtml" />
-    <Content Include="Views\Share\_Header.cshtml" />
-    <Content Include="Views\Share\_Layout.cshtml" />
+    <Content Include="Scripts\js\.DS_Store" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -197,6 +193,20 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MedCare_WEB.BusinessLogic\MedCare_WEB.BusinessLogic.csproj">
+      <Project>{c75cb236-4ef9-486d-9a2c-2cd4ea3248d8}</Project>
+      <Name>MedCare_WEB.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedCare_WEB.Domains\MedCare_WEB.Domains.csproj">
+      <Project>{9df9d287-cd24-4b2c-a83a-d487bf91bbe6}</Project>
+      <Name>MedCare_WEB.Domains</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MedCare_WEB.Helpers\MedCare_WEB.Helpers.csproj">
+      <Project>{2fa81a6f-481f-4d54-824f-d9b8d2e3e482}</Project>
+      <Name>MedCare_WEB.Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
