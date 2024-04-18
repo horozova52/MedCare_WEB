@@ -10,6 +10,8 @@ namespace MedCare_WEB.Domains.Entities.User
     {
         public bool Status { get; set; }
 
+        public UResponseLogin(string statusMsg) => StatusMsg = statusMsg;
+
         public string StatusMsg { get; set; }
     }
 }

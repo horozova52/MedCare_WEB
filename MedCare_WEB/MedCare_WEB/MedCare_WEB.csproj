@@ -152,6 +152,12 @@
     <Content Include="Contents\images\person_3.jpg" />
     <Content Include="Contents\images\person_4.jpg" />
     <Content Include="Global.asax" />
+    <None Include="Scripts\jQuery.3.7.1\Content\Scripts\jquery-3.7.1-vsdoc.js" />
+    <Content Include="Scripts\jQuery.3.7.1\Content\Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jQuery.3.7.1\Content\Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jQuery.3.7.1\Content\Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jQuery.3.7.1\Content\Scripts\jquery-3.7.1.slim.min.js" />
+    <None Include="Scripts\jQuery.3.7.1\Tools\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\js\aos.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
     <Content Include="Scripts\js\google-map.js" />
@@ -191,6 +197,15 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\js\.DS_Store" />
+    <Content Include="Scripts\jQuery.3.7.1\.signature.p7s" />
+    <Content Include="Scripts\jQuery.3.7.1\Content\Scripts\jquery-3.7.1.min.map" />
+    <Content Include="Scripts\jQuery.3.7.1\Content\Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jQuery.3.7.1\jQuery.3.7.1.nupkg" />
+    <Content Include="Scripts\jQuery.3.7.1\Tools\common.ps1" />
+    <Content Include="Scripts\jQuery.3.7.1\Tools\install.ps1" />
+    <Content Include="Scripts\jQuery.3.7.1\Tools\uninstall.ps1" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

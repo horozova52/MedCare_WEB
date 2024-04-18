@@ -42,8 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Enums\URole.cs" />
-    <Compile Include="Entities\User\ULoginData.cs" />
+    <Compile Include="Entities\User\DBSesionTable.cs" />
+    <Compile Include="Entities\User\DBUserTable.cs" />
+    <Compile Include="Entities\User\ULoginDataDomains.cs" />
+    <Compile Include="Entities\User\URegisterDomains.cs" />
     <Compile Include="Entities\User\UResponseLogin.cs" />
+    <Compile Include="Entities\User\UserMinimal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

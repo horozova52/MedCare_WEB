@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using project_CAN.BusinessLogic.DBModel;
-using project_CAN.Domain.Entities.User;
-using project_CAN.Helpers;
+using MedCare_WEB.BusinessLogic.DBModel;
+using MedCare_WEB.Domains.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,108 +10,111 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using MedCare_WEB.Domains.Enums;
-using MedCare_WEB.Domains.Entities.User;
+using MedCare_WEB.Helpers;
+using System.Web.UI.WebControls;
 
-namespace project_CAN.BusinessLogic.Core
+namespace MedCare_WEB.BusinessLogic.Core
 {
     public class UserApi
     {
-        internal UResponseLogin UserRegistrationAction(URegistrationData dataUserDomain)
+        internal UResponseLogin UserRegistrationAction(URegisterDomains dataUserDomain)
         {
-            UDBTable userTable;
-
             var validate = new System.ComponentModel.DataAnnotations.EmailAddressAttribute();
             if (!validate.IsValid(dataUserDomain.email))
             {
-                return new UResponseLogin { Status = false, StatusMsg = "Email format incorect" };
+                return new UResponseLogin { Status = false, StatusMsg = "Email format invalid" };
             }
-            var pass = LoginHelper.HashGen(dataUserDomain.password);
 
-            if (LoginHelper.HashGen(dataUserDomain.repeatPassword) != pass)
+            if (dataUserDomain.firstName.Length < 3)
             {
-                return new UResponseLogin { Status = false, StatusMsg = "Repeta Parola incorect" };
+                return new UResponseLogin { Status = false, StatusMsg = "username must contain minim 3 characters" };
             }
 
+            if (dataUserDomain.firstName.Length > 50)
+            {
+                return new UResponseLogin { Status = false, StatusMsg = "username must contain maxim 50 characters" };
+            }
+
+            if (dataUserDomain.lastName.Length < 3)
+            {
+                return new UResponseLogin { Status = false, StatusMsg = "username must contain minim 3 characters" };
+            }
+
+            if (dataUserDomain.lastName.Length > 50)
+            {
+                return new UResponseLogin { Status = false, StatusMsg = "username must contain maxim 50 characters" };
+            }
+
+            if (dataUserDomain.password.Length < 8)
+            {
+                return new UResponseLogin { Status = false, StatusMsg = "Password must contain minim 8 characters" };
+            }
+
+            if (dataUserDomain.email.Length > 256)
+            {
+                return new UResponseLogin { Status = false, StatusMsg = "Email must contain maxim 256 characters" };
+            }
+
+
+            if (dataUserDomain.password.Length > 50)
+            {
+                return new UResponseLogin { Status = false, StatusMsg = "Password must contain maxim 50 characters" };
+            }
+
+            var pass = LoginHelper.HashGen(dataUserDomain.password);
             using (var db = new DBUserContext())
             {
-                if (db.Users.Any(itemDB => itemDB.email == dataUserDomain.email) || db.Users.Any(itemDB => itemDB.userName == dataUserDomain.username))
+                if (db.Users.FirstOrDefault(item => item.email == dataUserDomain.email) != null)
                 {
-                    return new UResponseLogin { Status = false, StatusMsg = "Utilizatorul deja exista" };
+                    return new UResponseLogin { Status = false, StatusMsg = "This user already exists" };
                 }
 
-                var newUser = new UDBTable
+                var newUser = new DBUserTable
                 {
-                    userName = dataUserDomain.username,
+                    lastName = dataUserDomain.lastName,
+                    firstName = dataUserDomain.firstName,
                     email = dataUserDomain.email,
                     password = pass,
-                    privilegies = URole.user,
-                    lastLogin = dataUserDomain.lastLogin,
-                    isBlocked = false
+                    role = URole.user,
+                    lastLogin = DateTime.Now,
+                    banStatus = false
                 };
 
                 db.Users.Add(newUser);
                 db.SaveChanges();
             }
-            return new UResponseLogin { Status = true, StatusMsg = "Registrare cu success" };
+            return new UResponseLogin { Status = true, StatusMsg = "Successful register" };
         }
-        internal UResponseLogin UserLoginAction(ULoginData dataUserDomain)
+        internal UResponseLogin UserLoginAction(ULoginDataDomains dataDomainsUserDomain)
         {
-            UDBTable userTable;
-            var pass = LoginHelper.HashGen(dataUserDomain.password);
+            var pass = LoginHelper.HashGen(dataDomainsUserDomain.password);
             var validate = new System.ComponentModel.DataAnnotations.EmailAddressAttribute();
-            if (validate.IsValid(dataUserDomain.credential))
+            if (!validate.IsValid(dataDomainsUserDomain.email))
+                return new UResponseLogin { Status = false, StatusMsg = "Login or Password is incorrect" };
+            DBUserTable userTable;
+            using (var db = new DBUserContext())
             {
-                using (var db = new DBUserContext())
-                {
-                    userTable = db.Users.FirstOrDefault(itemDB => itemDB.email == dataUserDomain.credential && itemDB.password == pass);
-                }
-
-                if (userTable == null)
-                {
-                    return new UResponseLogin { Status = false, StatusMsg = "Login-ul sau Parola este incorecta" };
-                }
-
-                if (userTable.isBlocked)
-                {
-                    return new UResponseLogin { Status = false, StatusMsg = "D-voastra sunteti blocat!" };
-                }
-
-                using (var todo = new DBUserContext())
-                {
-                    userTable.lastLogin = dataUserDomain.lastLogin;
-                    todo.Entry(userTable).State = EntityState.Modified;
-                    todo.SaveChanges();
-                }
-
-                return new UResponseLogin { Status = true, StatusMsg = "Login cu success" };
+                userTable = db.Users.FirstOrDefault(itemDb => itemDb.email == dataDomainsUserDomain.email && itemDb.password == pass);
             }
-            // When user logins with username
-            else
+
+            if (userTable == null)
             {
-                //var pass = LoginHelper.HashGen(dataUserDomain.password);
-                using (var db = new DBUserContext())
-                {
-                    userTable = db.Users.FirstOrDefault(itemDB => itemDB.userName == dataUserDomain.credential && itemDB.password == pass);
-                }
-
-                if (userTable == null)
-                {
-                    return new UResponseLogin { Status = false, StatusMsg = "Login-ul sau Parola este incorecta" };
-                }
-                if (userTable.isBlocked)
-                {
-                    return new UResponseLogin { Status = false, StatusMsg = "D-voastra sunteti blocat!" };
-                }
-
-                using (var todo = new DBUserContext())
-                {
-                    userTable.lastLogin = dataUserDomain.lastLogin;
-                    todo.Entry(userTable).State = EntityState.Modified;
-                    todo.SaveChanges();
-                }
-
-                return new UResponseLogin { Status = true, StatusMsg = "Login cu success" };
+                return new UResponseLogin { Status = false, StatusMsg = "Login or Password is incorrect" };
             }
+
+            if (userTable.banStatus)
+            {
+                return new UResponseLogin { Status = false, StatusMsg = "You are blocked!" };
+            }
+
+            using (var todo = new DBUserContext())
+            {
+                userTable.lastLogin = DateTime.Now;
+                todo.Entry(userTable).State = EntityState.Modified;
+                todo.SaveChanges();
+            }
+
+            return new UResponseLogin { Status = true, StatusMsg = "Successful login" };
         }
 
         internal HttpCookie Cookie(string loginCredential)
@@ -121,47 +123,28 @@ namespace project_CAN.BusinessLogic.Core
             {
                 Value = CookieGenerator.Create(loginCredential)
             };
-            SessionDBTable currentSession = null;
-            UDBTable currentUserNoSession = null;
             using (var db = new DBSessionContext())
             {
-                // If user logins wih Email
                 var validate = new EmailAddressAttribute();
-                if (validate.IsValid(loginCredential))
-                {
-                    currentSession = db.Sessions.FirstOrDefault(itemDB => itemDB.User.email == loginCredential);
-                }
-                // If user logins wih Username
-                else
-                {
-                    currentSession = db.Sessions.FirstOrDefault(itemDB => itemDB.User.userName == loginCredential);
-                }
+                var currentDbSession = validate.IsValid(loginCredential) ? db.Sessions.FirstOrDefault(itemDb => itemDb.User.email == loginCredential) : null;
 
-                // If currentSession exists
-                if (currentSession != null)
+                if (currentDbSession != null)
                 {
-                    currentSession.cookieValue = apiCookie.Value;
-                    currentSession.expireTime = DateTime.Now.AddMinutes(60);
-                    db.Entry(currentSession).State = EntityState.Modified;
-                    db.SaveChanges(); // Save changes here
+                    currentDbSession.cookieValue = apiCookie.Value;
+                    currentDbSession.expireTime = DateTime.Now.AddMinutes(60);
+                    db.Entry(currentDbSession).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
-                // If currentSession does not exist
                 else
                 {
+                    DBUserTable currentUserNoSession = null;
                     using (var dbUser = new DBUserContext())
                     {
-                        // If user logins wih Email
-                        if (validate.IsValid(loginCredential))
-                        {
-                            currentUserNoSession = dbUser.Users.FirstOrDefault(itemDB => itemDB.email == loginCredential);
-                        }
-                        // If user logins wih Username
-                        else
-                        {
-                            currentUserNoSession = dbUser.Users.FirstOrDefault(itemDB => itemDB.userName == loginCredential);
-                        }
+                        currentUserNoSession = validate.IsValid(loginCredential) ? dbUser.Users.FirstOrDefault(itemDb => itemDb.email == loginCredential) : null;
                     }
-                    db.Sessions.Add(new SessionDBTable
+
+                    if (currentUserNoSession == null) return apiCookie;
+                    db.Sessions.Add(new DBSessionTable
                     {
                         userId = currentUserNoSession.userId,
                         cookieValue = apiCookie.Value,
@@ -176,32 +159,28 @@ namespace project_CAN.BusinessLogic.Core
 
         internal UserMinimal UserCookie(string cookie)
         {
-            SessionDBTable session = null;
-            UDBTable currentUser = null;
+            DBSessionTable dbSession = null;
+            DBUserTable currentUser = null;
 
             using (var db = new DBSessionContext())
             {
-                session = db.Sessions.Include(s => s.User)
-                                     .FirstOrDefault(itemDB => itemDB.cookieValue == cookie && itemDB.expireTime > DateTime.Now);
+                dbSession = db.Sessions.Include(s => s.User)
+                                     .FirstOrDefault(itemDb => itemDb.cookieValue == cookie && itemDb.expireTime > DateTime.Now);
             }
 
-            if (session == null) return null;
+            if (dbSession == null) return null;
             using (var db = new DBUserContext())
             {
                 var validate = new EmailAddressAttribute();
-                if (validate.IsValid(session.User.email))
+                if (validate.IsValid(dbSession.User.email))
                 {
-                    currentUser = db.Users.FirstOrDefault(u => u.email == session.User.email);
-                }
-                else
-                {
-                    currentUser = db.Users.FirstOrDefault(u => u.userName == session.User.userName);
+                    currentUser = db.Users.FirstOrDefault(u => u.email == dbSession.User.email);
                 }
             }
 
             if (currentUser == null) return null;
             Mapper.Reset();
-            Mapper.Initialize(cfg => cfg.CreateMap<UDBTable, UserMinimal>());
+            Mapper.Initialize(cfg => cfg.CreateMap<DBUserTable, UserMinimal>());
             var userminimal = Mapper.Map<UserMinimal>(currentUser);
 
             return userminimal;

@@ -1,0 +1,24 @@
+﻿@model MedCare_WEB.Models.UserLoginView
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="loginContent">
+        <h1>Logare</h1>
+        <div class="login">
+            <p>Login-ul:</p>
+            @Html.TextBoxFor(model => model.email)
+            @Html.ValidationMessageFor(model => model.email, "")
+        </div>
+        <div class="parola">
+            <p>Parola:</p>
+            @Html.PasswordFor(model => model.password)
+            @Html.ValidationMessageFor(model => model.password, "")
+        </div>
+        <button type="submit" class="btn btn-secondary btn-lg">Logare</button>
+    </div>
+}
