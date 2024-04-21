@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@model  MedCare_WEB.Models.UserRegisterView
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="singupContent">
+        <h1>Register</h1>
+        <div class="login">
+            <p>First Name:</p>
+            @Html.TextBoxFor(model => model.firstName)
+            @Html.ValidationMessageFor(model => model.firstName, "")
+        </div>
+
+        <div class="login">
+            <p>Last Name:</p>
+            @Html.TextBoxFor(model => model.lastName)
+            @Html.ValidationMessageFor(model => model.lastName, "")
+        </div>
+
+        <div class="E-mail">
+            <p>E-mail:</p>
+            @Html.TextBoxFor(model => model.email, new { @type = "email" })
+            @Html.ValidationMessageFor(model => model.email, "")
+        </div>
+
+        <div class="parola">
+            <p>Password:</p>
+            @Html.PasswordFor(model => model.password)
+            @Html.ValidationMessageFor(model => model.password)
+        </div>
+        <div>@ViewBag.Error</div>
+        <button type="submit">Submit</button>
+    </div>
+}
