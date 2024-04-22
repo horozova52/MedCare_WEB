@@ -8,7 +8,7 @@ namespace MedCare_WEB.Domains.Entities.User
 {
         public class ULoginData
         {
-            public string Credentials { get; set; }
+            public string Email { get; set; }
 
             public string Password { get; set; }
 

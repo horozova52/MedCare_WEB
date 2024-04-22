@@ -2,8 +2,8 @@
 {
     public enum URole
     {
-        user,
-        moderator,
-        admin
+        user = 0,
+        moderator = 1,
+        admin = 2
     }
 }
