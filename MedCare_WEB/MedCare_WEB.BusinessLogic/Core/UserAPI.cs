@@ -11,55 +11,58 @@ using MedCare_WEB.Domains.Entities.User;
 using MedCare_WEB.BusinessLogic.AppBL;
 using MedCare_WEB.Domains.Entities.Enums;
 using MedCare_WEB.Helpers;
+using MedCare_WEB.Domains.Entities.Admin;
+using MedCare_WEB.Domains.Entities.Appointment;
+using MedCare_WEB.Domains.Entities.Doctor;
 
 namespace project_CAN.BusinessLogic.Core
 {
     public class UserApi
     {
-        internal UResponseLogin UserLoginAction(ULoginData data)
+        internal BoolResp UserLoginAction(ULoginData data)
         {
             UserTable result;
             var validate = new EmailAddressAttribute();
             if (validate.IsValid(data.Email))
             {
                 var pass = LoginHelper.HashGen(data.Password);
-                using (var db = new UserContext())
+                using (var db = new TableContext())
                 {
                     result = db.Users.FirstOrDefault(u => u.Email == data.Email && u.Password == pass);
                 }
 
                 if (result == null)
                 {
-                    return new UResponseLogin { Status = false, StatusMsg = "The Username or Password is Incorrect" };
+                    return new BoolResp { Status = false, StatusMsg = "The Username or Password is Incorrect" };
                 }
 
-                using (var todo = new UserContext())
+                using (var todo = new TableContext())
                 {
                     result.LastIp = data.LoginIp;
                     result.LastLogin = data.LoginDateTime;
                     todo.Entry(result).State = EntityState.Modified;
                     todo.SaveChanges();
                 }
-                return new UResponseLogin { Status = true };
+                return new BoolResp { Status = true };
             }
             else
-                return new UResponseLogin { Status = false };
+                return new BoolResp { Status = false };
         }
 
-        internal UResponseRegister UserRegisterAction(URegisterData data)
+        internal BoolResp UserRegisterAction(URegisterData data)
         {
             UserTable existingUser;
             var validate = new EmailAddressAttribute();
             if (validate.IsValid(data.Email))
             {
-                using (var db = new UserContext())
+                using (var db = new TableContext())
                 {
                     existingUser = db.Users.FirstOrDefault(u => u.Email == data.Email);
                 }
 
                 if (existingUser != null)
                 {
-                    return new UResponseRegister { Status = false, StatusMsg = "User With Email Already Exists" };
+                    return new BoolResp { Status = false, StatusMsg = "User With Email Already Exists" };
                 }
 
                 var pass = LoginHelper.HashGen(data.Password);
@@ -73,18 +76,75 @@ namespace project_CAN.BusinessLogic.Core
                     Level = (URole)0,
                 };
 
-                using (var todo = new UserContext())
+                using (var todo = new TableContext())
                 {
                     todo.Users.Add(newUser);
                     todo.SaveChanges();
                 }
-                return new UResponseRegister { Status = true };
+                return new BoolResp { Status = true };
             }
             else
-                return new UResponseRegister { Status = false };
+                return new BoolResp { Status = false };
         }
 
-        internal HttpCookie Cookie(string loginCredential)
+          internal BoolResp AddAppointmentAction(AddAppointmentData data)
+          {
+               using (var db = new TableContext())
+               {
+                    AppointmentTable appointment = db.Appointments.FirstOrDefault(u => u.Doctor == data.Doctor && u.Date == data.Date && u.Time.Hour == data.Time.Hour);
+                    if (appointment != null)
+                    {
+                         return new BoolResp { Status = false, StatusMsg = "The doctor is busy at this time." };
+                    }
+
+                    var newAppointment = new AppointmentTable
+                    {
+                         FirstName = data.FirstName,
+                         LastName = data.LastName,
+                         Doctor = data.Doctor,
+                         Phone = data.Phone,
+                         Date = data.Date,
+                         Time = data.Time,
+                         Message = data.Message,
+                         UserId = data.UserId
+                    };
+                    db.Appointments.Add(newAppointment);
+                    db.SaveChanges();
+               }
+               return new BoolResp { Status = true };
+          }
+
+          internal List<UserTable> GetUserListAction()
+          {
+               List<UserTable> users;
+               using (var db = new TableContext())
+               {
+                    users = db.Users.ToList();
+               }
+               return users;
+          }
+
+          internal List<DoctorTable> GetDoctorListAction()
+          {
+               List<DoctorTable> doctors;
+               using (var db = new TableContext())
+               {
+                    doctors = db.Doctors.ToList();
+               }
+               return doctors;
+          }
+
+          internal List<AppointmentTable> GetAppointmentListAction()
+          {
+               List<AppointmentTable> appointments;
+               using (var db = new TableContext())
+               {
+                    appointments = db.Appointments.ToList();
+               }
+               return appointments;
+          }
+
+          internal HttpCookie Cookie(string loginCredential)
         {
             int sessionTime = 60;
             var apiCookie = new HttpCookie("X-KEY")
@@ -92,7 +152,7 @@ namespace project_CAN.BusinessLogic.Core
                 Value = CookieGenerator.Create(loginCredential)
             };
 
-            using (var db = new SessionContext())
+            using (var db = new TableContext())
             {
                 Session curent;
                 var validate = new EmailAddressAttribute();
@@ -109,7 +169,7 @@ namespace project_CAN.BusinessLogic.Core
                 {
                     curent.CookieString = apiCookie.Value;
                     curent.ExpireTime = DateTime.Now.AddMinutes(sessionTime);
-                    using (var todo = new SessionContext())
+                    using (var todo = new TableContext())
                     {
                         todo.Entry(curent).State = EntityState.Modified;
                         todo.SaveChanges();
@@ -134,12 +194,12 @@ namespace project_CAN.BusinessLogic.Core
             Session session;
             UserTable curentUser;
 
-            using (var db = new SessionContext())
+            using (var db = new TableContext())
             {
                 session = db.Session.FirstOrDefault(s => s.CookieString == cookie && s.ExpireTime > DateTime.Now);
             }
             if (session == null) return null;
-            using (var db = new UserContext())
+            using (var db = new TableContext())
             {
                 var validate = new EmailAddressAttribute();
                 if (validate.IsValid(session.Username))

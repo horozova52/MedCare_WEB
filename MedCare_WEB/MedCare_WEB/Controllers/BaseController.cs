@@ -20,21 +20,6 @@ namespace MedCare_WEB.Controllers
             _session = bl.GetSessionBL();
         }
 
-        public void RemoveExpiredSessions()
-        {
-            using (var db = new SessionContext())
-            {
-                var expiredSessions = db.Session.Where(s => s.ExpireTime < DateTime.Now).ToList();
-                if (expiredSessions.Any())
-                {
-                    foreach (var session in expiredSessions)
-                    {
-                        db.Session.Remove(session);
-                    }
-                    db.SaveChanges();
-                }
-            }
-        }
         public void SessionStatus()
         {
             var apiCookie = Request.Cookies["X-KEY"];
@@ -59,13 +44,11 @@ namespace MedCare_WEB.Controllers
                         }
                     }
                     System.Web.HttpContext.Current.Session["LoginStatus"] = "guest";
-                    RemoveExpiredSessions();
                 }
             }
             else
             {
                 System.Web.HttpContext.Current.Session["LoginStatus"] = "guest";
-                RemoveExpiredSessions();
             }
         }
     }

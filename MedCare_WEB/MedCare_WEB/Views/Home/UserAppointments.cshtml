@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "UserAppointments";
+     var appointments = ViewBag.appointments;
+}
+
+<section class="ftco-section" id="doctor-section">
+     <div class="container-fluid px-5">
+          <div class="row justify-content-center mb-5 pb-2">
+               <div class="col-md-8 text-center heading-section ftco-animate">
+                    <h2 class="mb-4">Your Personal Appointments</h2>
+               </div>
+          </div>
+          <div class="row">
+               @foreach (var appointment in appointments)
+               {
+                    <div class="col-md-6 col-lg-3 ftco-animate border-bottom">
+                         <div class="staff">
+                              <div class="img-wrap d-flex align-items-stretch">
+                                   <div class="img align-self-stretch" style="background-image: url(../../Contents/images/doc-1.jpg);"></div>
+                              </div>
+                              <div class="text pt-3 text-center">
+                                   <h3 class="mb-2">@appointment.FirstName @appointment.LastName</h3>
+                                   <span class="position mb-2">@appointment.Doctor</span>
+                                   <span class="position mb-2">@appointment.Date.Date.ToString("MM/dd/yyyy") - @appointment.Time.ToString("hh:mm tt")</span>
+                                   <div class="faded">
+                                        <p>@appointment.Phone</p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               }
+          </div>
+     </div>
+</section>

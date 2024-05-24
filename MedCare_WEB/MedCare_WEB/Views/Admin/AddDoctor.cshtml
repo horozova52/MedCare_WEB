@@ -1,0 +1,104 @@
+﻿
+@{
+     ViewBag.Title = "AddDoctor";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+     var doctorsList = ViewBag.doctorsList;
+}
+@model MedCare_WEB.Models.AddDoctor
+
+<section class="mt-5 ftco-section ftco-no-pt ftco-no-pb ftco-services-2 bg-light">
+     <div class="container">
+          <div class="row d-flex">
+               <div class="d-flex col-lg-12">
+                    <div class="appointment-wrap bg-white p-md-5">
+                         @Html.ValidationSummary(true)
+                         @using (Html.BeginForm("AddDoctor", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                         {
+                              @Html.AntiForgeryToken()
+                              <form action="#" class="appointment-form ftco-animate">
+                                   <div class="row d-flex align-items-center">
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Username, new
+                                        {
+                                             type = "text",
+                                             @class = "form-control",
+                                             placeholder = "Username",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Email, new
+                                        {
+                                             type = "email",
+                                             @class = "form-control",
+                                             placeholder = "Email",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group  col-lg-12">
+                                             @Html.TextBoxFor(m => m.Phone, new
+                                        {
+                                             type = "number",
+                                             @class = "form-control",
+                                             placeholder = "Phone",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.DropDownListFor(m => m.Type, new SelectList(ViewBag.types as System.Collections.IEnumerable, "Text"), "Select a type", new
+                                        {
+                                             @class = "form-control",
+                                             required = "required",
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Description, new
+                                        {
+                                             type = "text",
+                                             @class = "form-control",
+                                             placeholder = "Description",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="col-lg-12">
+                                             <input type="file" id="imageFile" required name="imageFile" accept="image/png" class="form-control" />
+                                        </div>
+                                        <button class="btn btn-primary  col-lg-12" href="#" type="submit">Add Doctor</button>
+                                   </div>
+                              </form>
+                         }
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>
+
+<section class="ftco-section" id="doctor-section">
+     <div class="container-fluid px-5">
+          <div class="row">
+               @foreach (var doctor in doctorsList)
+               {
+                    <div class="col-md-6 col-lg-3 ftco-animate border-bottom">
+                         <div class="staff">
+                              <div class="img-wrap d-flex align-items-stretch">
+                                   <div><img src="@Url.Content("~/Contents/images/doctors/" + doctor.Image)" class="img align-self-stretch"></div>
+                              </div>
+                              <div class="text pt-3 text-center">
+                                   <h3 class="mb-2">@doctor.Username</h3>
+                                   <span class="position mb-2">@doctor.Email</span>
+                                   <span class="position mb-2">@doctor.Phone</span>
+                                   <span class="position mb-2">@doctor.Type</span>
+                                   <div class="faded">
+                                        <p>@doctor.Description</p>
+                                   </div>
+                              </div>
+                              <div class="text-center mb-2">
+                                   <a class="btn btn-sm btn-info" href="@Url.Action("EditDoctor", "Admin", new { id = doctor.Id })">Edit</a>
+                                   <a class="btn btn-sm btn-danger" href="@Url.Action("DeleteDoctor", "Admin", new {id = doctor.Id})">Delete</a>
+                              </div>
+                         </div>
+                    </div>
+               }
+          </div>
+     </div>
+</section>

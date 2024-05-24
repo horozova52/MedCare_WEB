@@ -51,12 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Enums\URole.cs" />
+    <Compile Include="Entities\Admin\AddDoctorData.cs" />
+    <Compile Include="Entities\Admin\AddUserData.cs" />
+    <Compile Include="Entities\Admin\EditAppointmentData.cs" />
+    <Compile Include="Entities\Admin\EditDoctorData.cs" />
+    <Compile Include="Entities\Admin\EditUserData.cs" />
+    <Compile Include="Entities\Appointment\AppointmentTable.cs" />
+    <Compile Include="Entities\Appointment\DoctorTable.cs" />
+    <Compile Include="Entities\User\AddAppointmentData.cs" />
+    <Compile Include="Enums\URole.cs" />
+    <Compile Include="Entities\User\BoolResp.cs" />
     <Compile Include="Entities\User\Session.cs" />
     <Compile Include="Entities\User\ULoginData.cs" />
     <Compile Include="Entities\User\URegisterData.cs" />
-    <Compile Include="Entities\User\UResponseLogin.cs" />
-    <Compile Include="Entities\User\UResponseRegister.cs" />
     <Compile Include="Entities\User\UserMinimal.cs" />
     <Compile Include="Entities\User\UserTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

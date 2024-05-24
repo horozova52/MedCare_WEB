@@ -227,6 +227,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddAppointment.cs" />
+    <Compile Include="Models\AddDoctor.cs" />
+    <Compile Include="Models\AddUser.cs" />
+    <Compile Include="Models\EditAppointment.cs" />
+    <Compile Include="Models\EditDoctor.cs" />
+    <Compile Include="Models\EditUser.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\UserRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,7 +257,14 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Admin\Doctors.cshtml" />
+    <Content Include="Views\Home\Appointment.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\AddDoctor.cshtml" />
+    <Content Include="Views\Admin\EditDoctor.cshtml" />
+    <Content Include="Views\Admin\EditAppointment.cshtml" />
+    <Content Include="Views\Admin\ShowAppointment.cshtml" />
+    <Content Include="Views\Home\UserAppointments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -259,7 +272,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Contents\images\doctors\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MedCare_WEB.BusinessLogic\MedCare_WEB.BusinessLogic.csproj">
       <Project>{c75cb236-4ef9-486d-9a2c-2cd4ea3248d8}</Project>

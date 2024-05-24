@@ -1,4 +1,5 @@
-﻿using MedCare_WEB.BusinessLogic.Interfaces;
+﻿using MedCare_WEB.BusinessLogic.AppBL;
+using MedCare_WEB.BusinessLogic.Interfaces;
 using project_CAN.BusinessLogic;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,9 @@ namespace MedCare_WEB.BusinessLogic
         {
             return new SessionBL();
         }
-    }
+          public IAdmin GetAdminBL()
+          {
+               return new AdminBL();
+          }
+     }
 }

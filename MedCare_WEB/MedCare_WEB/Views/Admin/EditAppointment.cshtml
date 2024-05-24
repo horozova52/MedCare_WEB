@@ -1,0 +1,92 @@
+﻿
+@{
+     ViewBag.Title = "EditAppointment";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+     var appointmentToEdit = ViewBag.appointmnetToEdit;
+}
+@model MedCare_WEB.Models.EditAppointment
+
+<section class="mt-5 ftco-section ftco-no-pt ftco-no-pb ftco-services-2 bg-light">
+     <div class="container">
+          <div class="row d-flex">
+               <div class="d-flex col-lg-12">
+                    <div class="appointment-wrap bg-white p-md-5">
+                         @Html.ValidationSummary(true)
+                         @using (Html.BeginForm("EditAppointment", "Admin", FormMethod.Post))
+                         {
+                              @Html.AntiForgeryToken()
+                              <form action="#" class="appointment-form ftco-animate">
+                                   <div class="row d-flex align-items-center">
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.FirstName, new
+                                        {
+                                             type = "text",
+                                             @class = "form-control",
+                                             placeholder = "First Name",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.LastName, new
+                                        {
+                                             type = "text",
+                                             @class = "form-control",
+                                             placeholder = "Last Name",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Doctor, new
+                                        {
+                                             type = "text",
+                                             @class = "form-control",
+                                             placeholder = "Doctor",
+                                             required = true,
+                                             @readonly = "readonly"
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Phone, new
+                                        {
+                                             type = "number",
+                                             @class = "form-control",
+                                             placeholder = "Phone",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Date, "{0:yyyy-MM-dd}", new
+                                        {
+                                             type = "date",
+                                             @class = "form-control",
+                                             placeholder = "End Date",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Time, "{0:hh:mm}", new
+                                        {
+                                             type = "time",
+                                             @class = "form-control",
+                                             placeholder = "Start Hour",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Message, new
+                                        {
+                                             type = "text",
+                                             @class = "form-control",
+                                             placeholder = "Message",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <button class="btn btn-primary col-lg-12" href="#" type="submit">Submit Appointment</button>
+                                   </div>
+                              </form>
+                         }
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>

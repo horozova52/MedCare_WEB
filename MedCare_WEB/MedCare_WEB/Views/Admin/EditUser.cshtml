@@ -1,0 +1,58 @@
+﻿
+@{
+     ViewBag.Title = "EditUser";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+     var userToEdit = ViewBag.userToEdit;
+}
+@model MedCare_WEB.Models.EditUser
+
+<section class="mt-5 ftco-section ftco-no-pt ftco-no-pb ftco-services-2 bg-light">
+     <div class="container">
+          <div class="row d-flex">
+               <div class="d-flex col-lg-12">
+                    <div class="appointment-wrap bg-white p-md-5">
+                         @Html.ValidationSummary(true)
+                         @using (Html.BeginForm("EditUser", "Admin", FormMethod.Post))
+                         {
+                              @Html.AntiForgeryToken()
+                              <form action="#" class="appointment-form ftco-animate">
+                                   <div class="row d-flex align-items-center">
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Username, new
+                                        {
+                                             type = "text",
+                                             @class = "form-control",
+                                             placeholder = "Username",
+                                             required = true,
+                                        })
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                             @Html.TextBoxFor(m => m.Email, new
+                                        {
+                                             type = "email",
+                                             @class = "form-control",
+                                             placeholder = "Email",
+                                             required = true,
+                                             @readonly = "readonly"
+                                        })
+                                        </div>
+                                        <div class="form-group  col-lg-12">
+                                             @Html.TextBoxFor(m => m.Level, new
+                                        {
+                                             type = "number",
+                                             @class = "form-control",
+                                             placeholder = "Level (0 - user, 1 - moderator, 2 - admin)",
+                                             required = true,
+                                             min = 0,
+                                             max = 2
+                                        })
+                                        </div>
+                                        <button class="btn btn-primary  col-lg-12" href="#" type="submit">Edit User</button>
+                                   </div>
+                              </form>
+                         }
+                    </div>
+               </div>
+          </div>
+     </div>
+</section>

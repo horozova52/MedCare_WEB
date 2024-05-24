@@ -1,5 +1,6 @@
 using AutoMapper;
 using eUseControl.Web;
+using MedCare_WEB.Domains.Entities.Admin;
 using MedCare_WEB.Domains.Entities.User;
 using MedCare_WEB.Models;
 using System;
@@ -29,6 +30,14 @@ namespace MedCare_WEB
                 cfg.CreateMap<UserLogin, ULoginData>();
                 cfg.CreateMap<UserRegister, URegisterData>();
                 cfg.CreateMap<UserTable, UserMinimal>();
+
+                 cfg.CreateMap<AddUser, AddUserData>();
+                 cfg.CreateMap<AddDoctor, AddDoctorData>();
+                 cfg.CreateMap<AddAppointment, AddAppointmentData>();
+
+                 cfg.CreateMap<EditUser, EditUserData>();
+                 cfg.CreateMap<EditDoctor, EditDoctorData>();
+                 cfg.CreateMap<EditAppointment, EditAppointmentData>();
             });
         }
     }
